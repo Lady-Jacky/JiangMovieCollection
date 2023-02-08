@@ -229,8 +229,8 @@ public class MovieCollection {
       String[] actor = movies.get(a).getCast().split("\\|");
       ArrayList<String> news = new ArrayList<>(Arrays.asList(actor));
       System.out.println(news);
-      for(int c = 0; c < actor.length; c++) {
-        if(actor[c].indexOf(searchTerm) != -1) {
+      for(int c = 0; c < news.size(); c++) {
+        if(news.get(c).indexOf(searchTerm) != -1) {
 
             cast.add(actor[c]);
 
