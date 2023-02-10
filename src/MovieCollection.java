@@ -347,15 +347,46 @@ public class MovieCollection {
   }
   
   private void listHighestRated() {
+    int count = 0;
+    int counting = 0;
     ArrayList<Double> ratings = new ArrayList<>();
-    for(int i = 0; i < 50; i ++) {
-      for(int a = 0; a < movies.size(); a++) {
+    ArrayList<String> titles = new ArrayList<>();
 
+    for (int i = 0; i < movies.size(); i++) {
+      ratings.add(movies.get(i).getUserRating());
+    }
+    Collections.sort(ratings);
+
+
+    for(int a = ratings.size()-1; a >= 0; a--) {
+      for(int b = 0; b < movies.size(); b++) {
+        if(movies.get(b).getUserRating() == ratings.get(a)) {
+            titles.add(movies.get(b).getTitle());
+        }
       }
     }
-  }
+
+    for (int i = movies.size()-1; i >= movies.size()-50; i--) {
+      // this will print index 0 as choice 1 in the results list; better for user!
+      count += 1;
+      System.out.println("" + count + ". " + titles.get(i) + ": " + ratings.get(i));
+    }
+
+    }
+
+
   
   private void listHighestRevenue() {
-    /* TASK 6: IMPLEMENT ME */
+    int count = 0;
+    ArrayList<Integer> revenue = new ArrayList<>();
+    for(int i = 0; i < movies.size(); i ++) {
+      revenue.add(movies.get(i).getRevenue());
+    }
+    Collections.sort(revenue);
+    for (int i = movies.size()-1; i >= movies.size() - 50; i--) {
+      // this will print index 0 as choice 1 in the results list; better for user!
+      count += 1;
+      System.out.println("" + count + ". " + revenue.get(i));
+    }
   }
 }
