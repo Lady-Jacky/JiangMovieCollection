@@ -348,45 +348,86 @@ public class MovieCollection {
   
   private void listHighestRated() {
     int count = 0;
-    int counting = 0;
     ArrayList<Double> ratings = new ArrayList<>();
-    ArrayList<String> titles = new ArrayList<>();
+    ArrayList<Movie> titles = new ArrayList<>();
+    ArrayList<Double> topRatings = new ArrayList<>();
 
     for (int i = 0; i < movies.size(); i++) {
       ratings.add(movies.get(i).getUserRating());
     }
     Collections.sort(ratings);
 
+    for (int g = movies.size()-1; g >= movies.size()-50; g--) {
+      topRatings.add(ratings.get(g));
+    }
 
-    for(int a = ratings.size()-1; a >= 0; a--) {
+    for(int a = 0; a < topRatings.size(); a++) {
       for(int b = 0; b < movies.size(); b++) {
-        if(movies.get(b).getUserRating() == ratings.get(a)) {
-            titles.add(movies.get(b).getTitle());
+        if(topRatings.get(a) == movies.get(b).getUserRating()) {
+          if(!titles.contains(movies.get(b))) {
+            titles.add(movies.get(b));
+          }
         }
       }
     }
 
-    for (int i = movies.size()-1; i >= movies.size()-50; i--) {
+    for (int i = 0; i < 50; i++) {
       // this will print index 0 as choice 1 in the results list; better for user!
       count += 1;
-      System.out.println("" + count + ". " + titles.get(i) + ": " + ratings.get(i));
+      System.out.println("" + count + ". " + titles.get(i).getTitle() + ": " + topRatings.get(i));
     }
 
+    System.out.println("Which movie would you like to learn more about?");
+    System.out.print("Enter number: ");
+    int choice = scanner.nextInt();
+    scanner.nextLine();
+    Movie selectedMovie = titles.get(choice - 1);
+    displayMovieInfo(selectedMovie);
+    System.out.println("\n ** Press Enter to Return to Main Menu **");
+    scanner.nextLine();
     }
+
 
 
   
   private void listHighestRevenue() {
     int count = 0;
     ArrayList<Integer> revenue = new ArrayList<>();
+    ArrayList<Integer> topRevenue = new ArrayList<>();
+    ArrayList<Movie> titles = new ArrayList<>();
+
     for(int i = 0; i < movies.size(); i ++) {
       revenue.add(movies.get(i).getRevenue());
     }
     Collections.sort(revenue);
-    for (int i = movies.size()-1; i >= movies.size() - 50; i--) {
+
+    for (int g = movies.size()-1; g >= movies.size()-50; g--) {
+      topRevenue.add(revenue.get(g));
+    }
+
+    for(int a = 0; a < topRevenue.size(); a++) {
+      for(int b = 0; b < movies.size(); b++) {
+        if(topRevenue.get(a) == movies.get(b).getRevenue()) {
+          if(!titles.contains(movies.get(b))) {
+            titles.add(movies.get(b));
+          }
+        }
+      }
+    }
+
+    for (int i = 0; i < 50; i++) {
       // this will print index 0 as choice 1 in the results list; better for user!
       count += 1;
-      System.out.println("" + count + ". " + revenue.get(i));
+      System.out.println("" + count + ". " + titles.get(i).getTitle() + ": $"+ topRevenue.get(i));
     }
+
+    System.out.println("Which movie would you like to learn more about?");
+    System.out.print("Enter number: ");
+    int choice = scanner.nextInt();
+    scanner.nextLine();
+    Movie selectedMovie = titles.get(choice - 1);
+    displayMovieInfo(selectedMovie);
+    System.out.println("\n ** Press Enter to Return to Main Menu **");
+    scanner.nextLine();
   }
 }
